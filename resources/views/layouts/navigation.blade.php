@@ -15,6 +15,20 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    <!-- Enlace a Proyectos -->
+                    @auth
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
+                            {{ __('Proyectos') }}
+                        </x-nav-link>
+                    @endauth
+
+                    <!-- Enlace a Tareas -->
+                    @auth
+                        <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                            {{ __('Tareas') }}
+                        </x-nav-link>
+                    @endauth
                 </div>
             </div>
 
@@ -70,6 +84,20 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            <!-- Enlace a Proyectos -->
+            @auth
+                <x-responsive-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
+                    {{ __('Proyectos') }}
+                </x-responsive-nav-link>
+            @endauth
+
+            <!-- Enlace a Tareas -->
+            @auth
+                <x-responsive-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                    {{ __('Tareas') }}
+                </x-responsive-nav-link>
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
