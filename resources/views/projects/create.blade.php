@@ -16,10 +16,10 @@
 
                 <div class="mb-4">
                     <label for="description" class="block text-gray-700">Descripción:</label>
-                    <textarea id="description" name="description" class="w-full border border-gray-300 p-2 rounded"></textarea>
+                    <textarea id="description" name="description" class="w-full border border-gray-300 p-2 rounded" style="resize: none"></textarea>
                 </div>
 
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
+                <button type="submit" class="bg-blue-500 text-black px-4 py-2 rounded">Guardar</button>
             </form>
         </div>
     </div>

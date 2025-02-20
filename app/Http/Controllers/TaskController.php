@@ -22,12 +22,17 @@ class TaskController extends Controller
      */
     public function index()
     {
-        // Los administradores ven todas las tareas, los usuarios solo las suyas
-        $tasks = Auth::user()->role === 'admin' ? Task::all() : Task::where('user_id', Auth::id())->get();
-
-        $tasksFromOthers = Task::where('user_id', '!=', Auth::id())->get();
-
-        return view('tasks.index', compact('tasks', 'tasksFromOthers'));
+        if (Auth::user()->role === 'admin') {
+            // Si es admin, mostrar todas las tareas
+            $tasks = Task::all();
+            return view('tasks.index', compact('tasks'));
+        }
+    
+        // Si es un usuario normal, mostrar solo las tareas asignadas a él y las de otros
+        $tasks = Task::all(); // Tareas globales, se utilizan para que el usuario vea todas
+        //$tasksU = Task::where('user_id', Auth::id())->get(); // Tareas asignadas al usuario
+    
+        return view('tasks.index', compact('tasks'));
     }
 
     /**

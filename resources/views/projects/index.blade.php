@@ -17,7 +17,7 @@
                 <thead>
                     <tr class="bg-gray-200 dark:bg-gray-700">
                         <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">ID</th>
-                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Nombre</th>
+                        <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Nombre proyecto</th>
                         <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Descripción</th>
                         <th class="border border-gray-300 dark:border-gray-700 px-4 py-2">Acciones</th>
                     </tr>
