@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
@@ -23,7 +24,10 @@ class TaskController extends Controller
     {
         // Los administradores ven todas las tareas, los usuarios solo las suyas
         $tasks = Auth::user()->role === 'admin' ? Task::all() : Task::where('user_id', Auth::id())->get();
-        return view('tasks.index', compact('tasks'));
+
+        $tasksFromOthers = Task::where('user_id', '!=', Auth::id())->get();
+
+        return view('tasks.index', compact('tasks', 'tasksFromOthers'));
     }
 
     /**
@@ -32,6 +36,7 @@ class TaskController extends Controller
     public function create()
     {
         $projects = Project::all();
+        $users = User::all(); // Obtener todos los usuarios
         return view('tasks.create', compact('projects'));
     }
 
@@ -40,7 +45,10 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+
+       // dd($request->all()); 
+  
+       $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'project_id' => 'required|exists:projects,id',
@@ -83,29 +91,14 @@ class TaskController extends Controller
      */
     public function update(Request $request, Task $task)
     {
-        if (Auth::user()->role === 'admin') {
-            // Admin puede actualizar todo
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'description' => 'required|string',
-                'status' => 'required|in:waiting,in process,completed',
-                'user_id' => 'required|exists:users,id',
-            ]);
-            $task->update($request->only(['name', 'description', 'status', 'user_id']));
-        } else {
-            // Usuario solo puede cambiar el estado
-            $request->validate([
-                'status' => 'required|in:waiting,in process,completed',
-            ]);
-
-            if ($task->user_id !== Auth::id()) {
-                return redirect()->route('tasks.index')->with('error', 'No puedes modificar esta tarea.');
-            }
-
-            $task->update($request->only(['status']));
-        }
-
-        return redirect()->route('tasks.index')->with('success', 'Tarea actualizada con éxito.');
+        $validated = $request->validate([
+            'status' => 'required|in:waiting,in process,completed', // Validación de status
+        ]);
+    
+        $task->status = $validated['status'];
+        $task->save();
+    
+        return redirect()->route('tasks.index')->with('success', 'Tarea actualizada correctamente.');
     }
 
     /**

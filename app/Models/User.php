@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->role === 'admin';
     }
+
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }

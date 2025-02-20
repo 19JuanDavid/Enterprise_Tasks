@@ -16,12 +16,14 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
 
+                    @if (auth()->user() && auth()->user()->role === 'admin')
                     <!-- Enlace a Proyectos -->
                     @auth
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
                             {{ __('Proyectos') }}
                         </x-nav-link>
                     @endauth
+                    @endif
 
                     <!-- Enlace a Tareas -->
                     @auth
@@ -85,12 +87,15 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
 
+            
+            @if (auth()->user() && auth()->user()->role === 'admin')
             <!-- Enlace a Proyectos -->
             @auth
                 <x-responsive-nav-link :href="route('projects.index')" :active="request()->routeIs('projects.index')">
                     {{ __('Proyectos') }}
                 </x-responsive-nav-link>
             @endauth
+            @endif
 
             <!-- Enlace a Tareas -->
             @auth
